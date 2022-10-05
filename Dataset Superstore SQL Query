@@ -1,0 +1,75 @@
+--Total Product Sold--
+SELECT SUM(Quantity) AS JumlahProdukTerjual
+FROM [Binar Mock Test].[dbo].[Order]
+
+--Unique Customer that has ordered the product--
+SELECT COUNT(DISTINCT[Customer Name]) AS JumlahNamaCustomer
+FROM [Binar Mock Test].[dbo].[Customer]
+
+--Average Profit --
+SELECT AVG(profit) AS AvgProfit
+FROM [Binar Mock Test].[dbo].[Order] - BELUM ADA MATA UANG
+
+--Minimum Discount of All Order--
+SELECT MIN(Discount) AS MinDiscount
+FROM [Binar Mock Test].[dbo].[Order] 
+
+--Total All Products in the Furniture Category--
+SELECT SUM(Quantity), Category
+FROM [Binar Mock Test].[dbo].[Order] 
+FULL OUTER JOIN [Binar Mock Test].[dbo].[Categories] 
+ON [Binar Mock Test].[dbo].[Order] .[Product ID]= [Binar Mock Test].[dbo].[Categories] .[Product ID]
+GROUP BY Category
+HAVING Category = 'Furniture'
+
+--Customer Name that buys the most product--
+SELECT DISTINCT TOP (1)(CustomerName), MAX(Quantity) AS QuantityTertinggi
+FROM [Binar Mock Test].[dbo].[Order]
+FULL OUTER JOIN [Binar Mock Test].[dbo].[Customer] 
+ON [Binar Mock Test].[dbo].[Order] .[Customer ID]= [Binar Mock Test].[dbo].[Customer] .[CustomerID]
+GROUP BY CustomerName
+ORDER BY QuantityTertinggi DESC
+
+--Customer Name that has the most repeated order--
+SELECT DISTINCT TOP (1)(CustomerName), COUNT(Quantity) AS RepeatedOrder
+FROM [Binar Mock Test].[dbo].[Order]
+FULL OUTER JOIN [Binar Mock Test].[dbo].[Customer] 
+ON [Binar Mock Test].[dbo].[Order] .[Customer ID]= [Binar Mock Test].[dbo].[Customer] .[CustomerID]
+WHERE CustomerName IS NOT NULL
+GROUP BY CustomerName
+ORDER BY  CustomerName, RepeatedOrder
+
+
+--City that have the most repeated order--
+SELECT DISTINCT(City), COUNT([Customer ID]) AS RepeatOrder
+FROM [Binar Mock Test].[dbo].[Order]
+GROUP BY City
+ORDER BY RepeatOrder DESC
+
+
+--The order that has the Mininum Total Discount--
+SELECT DISTINCT([Order ID]), MIN(Discount) AS DiskonTerkecil
+FROM [Binar Mock Test].[dbo].[Order]
+WHERE [Order ID] IS NOT NULL
+GROUP BY [Order ID]
+ORDER BY DiskonTerkecil 
+
+
+--SELECT DISTINCT[Sub-Category], SUM(Profit) AS TotalProfit--
+FROM [Binar Mock Test].[dbo].[Order] 
+FULL OUTER JOIN [Binar Mock Test].[dbo].[Categories] 
+ON [Binar Mock Test].[dbo].[Order] .[Product ID]= [Binar Mock Test].[dbo].[Categories] .[Product ID]
+WHERE[Sub-Category] = 'Furnishings' OR [Sub-Category] = 'Supplies'
+GROUP BY [Sub-Category]
+
+--Total Order that has black in the Product Name--
+SELECT  SUM(Quantity)
+FROM [Binar Mock Test].[dbo].[Order]
+FULL OUTER JOIN [Binar Mock Test].[dbo].[Categories] 
+ON [Binar Mock Test].[dbo].[Order] .[Product ID]= [Binar Mock Test].[dbo].[Categories] .[Product ID]
+WHERE [Product Name] LIKE '%black%'
+
+--Total Order that have the same SHIP/ORDER Date--
+SELECT  SUM(Quantity) AS JumlahOrderShipyangSama
+FROM [Binar Mock Test].[dbo].[Order]
+WHERE [Order Date] = [Ship Date] 
