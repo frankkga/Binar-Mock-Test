@@ -8,7 +8,7 @@ FROM [Binar Mock Test].[dbo].[Customer]
 
 --Average Profit --
 SELECT AVG(profit) AS AvgProfit
-FROM [Binar Mock Test].[dbo].[Order] - BELUM ADA MATA UANG
+FROM [Binar Mock Test].[dbo].[Order] 
 
 --Minimum Discount of All Order--
 SELECT MIN(Discount) AS MinDiscount
