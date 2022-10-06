@@ -7,7 +7,7 @@ SELECT COUNT(DISTINCT[Customer Name]) AS JumlahNamaCustomer
 FROM [Binar Mock Test].[dbo].[Customer]
 
 --Average Profit --
-SELECT AVG(profit) AS AvgProfit
+SELECT CONCAT('Rp.', AVG(profit)) AS AvgProfit
 FROM [Binar Mock Test].[dbo].[Order] 
 
 --Minimum Discount of All Order--
